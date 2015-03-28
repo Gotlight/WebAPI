@@ -1,0 +1,58 @@
+﻿@model WebApplication2.Models.Organization
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Organization</h4>
+	<hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.OrganizationName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.OrganizationName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.OrganizationAddress)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.OrganizationAddress)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IsActive)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IsActive)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.OrganizationLogo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.OrganizationLogo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.OrganizationType.OrganizationTypeName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.OrganizationType.OrganizationTypeName)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

@@ -1,0 +1,339 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="RESTAURANTModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="C__MigrationHistory">
+    <Key>
+      <PropertyRef Name="MigrationId" />
+      <PropertyRef Name="ContextKey" />
+    </Key>
+    <Property Name="MigrationId" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="ContextKey" Type="String" MaxLength="300" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Model" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
+    <Property Name="ProductVersion" Type="String" MaxLength="32" FixedLength="false" Unicode="true" Nullable="false" />
+  </EntityType>
+  <EntityType Name="AspNetRole">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="AspNetUsers" Relationship="Self.AspNetUserRoles" FromRole="AspNetRoles" ToRole="AspNetUsers" />
+  </EntityType>
+  <EntityType Name="AspNetUserClaim">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ClaimType" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="ClaimValue" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="User_Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="AspNetUser" Relationship="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_User_Id" FromRole="AspNetUserClaims" ToRole="AspNetUsers" />
+  </EntityType>
+  <EntityType Name="AspNetUserLogin">
+    <Key>
+      <PropertyRef Name="UserId" />
+      <PropertyRef Name="LoginProvider" />
+      <PropertyRef Name="ProviderKey" />
+    </Key>
+    <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="LoginProvider" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="ProviderKey" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="AspNetUser" Relationship="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUserLogins" ToRole="AspNetUsers" />
+  </EntityType>
+  <EntityType Name="AspNetUser">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="UserName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="PasswordHash" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="SecurityStamp" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Discriminator" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="AspNetUserClaims" Relationship="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_User_Id" FromRole="AspNetUsers" ToRole="AspNetUserClaims" />
+    <NavigationProperty Name="AspNetUserLogins" Relationship="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserLogins" />
+    <NavigationProperty Name="AspNetRoles" Relationship="Self.AspNetUserRoles" FromRole="AspNetUsers" ToRole="AspNetRoles" />
+  </EntityType>
+  <EntityType Name="Language">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Guid" Nullable="false" />
+    <Property Name="LanguageName" Type="String" MaxLength="50" FixedLength="true" Unicode="true" Nullable="false" />
+    <Property Name="LanguageCode" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="MenuCatalogLocalizations" Relationship="Self.FK_MenuCatalogLocalization_Language" FromRole="Language" ToRole="MenuCatalogLocalization" />
+    <NavigationProperty Name="MenuItemLocalizations" Relationship="Self.FK_MenuItemLocalization_Language" FromRole="Language" ToRole="MenuItemLocalization" />
+  </EntityType>
+  <EntityType Name="MenuCatalog">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Guid" Nullable="false" />
+    <Property Name="ParentID" Type="String" MaxLength="40" FixedLength="true" Unicode="true" Nullable="false" />
+    <Property Name="OrganizationID" Type="Guid" Nullable="false" />
+    <Property Name="CatalogLevelName" Type="String" MaxLength="255" FixedLength="true" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="Organization" Relationship="Self.FK_MenuCatalog_Organization" FromRole="MenuCatalog" ToRole="Organization" />
+    <NavigationProperty Name="MenuCatalogLocalizations" Relationship="Self.FK_MenuCatalogLocalization_MenuCatalog" FromRole="MenuCatalog" ToRole="MenuCatalogLocalization" />
+    <NavigationProperty Name="MenuItems" Relationship="Self.FK_MenuItem_MenuCatalog" FromRole="MenuCatalog" ToRole="MenuItem" />
+  </EntityType>
+  <EntityType Name="MenuCatalogLocalization">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Guid" Nullable="false" />
+    <Property Name="LanguageID" Type="Guid" Nullable="false" />
+    <Property Name="MenuCatalogID" Type="Guid" Nullable="false" />
+    <Property Name="MenuCatalogLocalizationName" Type="String" MaxLength="50" FixedLength="true" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="Language" Relationship="Self.FK_MenuCatalogLocalization_Language" FromRole="MenuCatalogLocalization" ToRole="Language" />
+    <NavigationProperty Name="MenuCatalog" Relationship="Self.FK_MenuCatalogLocalization_MenuCatalog" FromRole="MenuCatalogLocalization" ToRole="MenuCatalog" />
+  </EntityType>
+  <EntityType Name="MenuItem">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Guid" Nullable="false" />
+    <Property Name="MenuCatalog_ID" Type="Guid" Nullable="false" />
+    <Property Name="MenuItemPrice" Type="Int32" Nullable="false" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="MenuCatalog" Relationship="Self.FK_MenuItem_MenuCatalog" FromRole="MenuItem" ToRole="MenuCatalog" />
+    <NavigationProperty Name="MenuItemLocalizations" Relationship="Self.FK_MenuItemLocalization_MenuItem" FromRole="MenuItem" ToRole="MenuItemLocalization" />
+  </EntityType>
+  <EntityType Name="MenuItemLocalization">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Guid" Nullable="false" />
+    <Property Name="LanguageID" Type="Guid" Nullable="false" />
+    <Property Name="MenuItemID" Type="Guid" Nullable="false" />
+    <Property Name="MenuItemLocalizationName" Type="String" MaxLength="50" FixedLength="true" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="Language" Relationship="Self.FK_MenuItemLocalization_Language" FromRole="MenuItemLocalization" ToRole="Language" />
+    <NavigationProperty Name="MenuItem" Relationship="Self.FK_MenuItemLocalization_MenuItem" FromRole="MenuItemLocalization" ToRole="MenuItem" />
+  </EntityType>
+  <EntityType Name="Organization">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Guid" Nullable="false" />
+    <Property Name="OrganizationName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="OrganizationTypeID" Type="Guid" Nullable="false" />
+    <Property Name="OrganizationAddress" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+    <Property Name="OrganizationLogo" Type="Binary" MaxLength="Max" FixedLength="false" />
+    <NavigationProperty Name="MenuCatalogs" Relationship="Self.FK_MenuCatalog_Organization" FromRole="Organization" ToRole="MenuCatalog" />
+    <NavigationProperty Name="OrganizationType" Relationship="Self.FK_Organization_OrganizationType" FromRole="Organization" ToRole="OrganizationType" />
+    <NavigationProperty Name="OrganizationPhoneNumbers" Relationship="Self.FK_OrganizationPhoneNumber_Organization" FromRole="Organization" ToRole="OrganizationPhoneNumber" />
+  </EntityType>
+  <EntityType Name="OrganizationPhoneNumber">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Guid" Nullable="false" />
+    <Property Name="OrganizationPhoneNumber1" Type="String" MaxLength="40" FixedLength="true" Unicode="true" Nullable="false" />
+    <Property Name="OrganizationID" Type="Guid" Nullable="false" />
+    <NavigationProperty Name="Organization" Relationship="Self.FK_OrganizationPhoneNumber_Organization" FromRole="OrganizationPhoneNumber" ToRole="Organization" />
+  </EntityType>
+  <EntityType Name="OrganizationType">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Guid" Nullable="false" />
+    <Property Name="OrganizationTypeName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="Organizations" Relationship="Self.FK_Organization_OrganizationType" FromRole="OrganizationType" ToRole="Organization" />
+  </EntityType>
+  <EntityType Name="sysdiagram">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_User_Id">
+    <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="AspNetUserClaims" Type="Self.AspNetUserClaim" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetUsers">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="AspNetUserClaims">
+        <PropertyRef Name="User_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+    <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="AspNetUserLogins" Type="Self.AspNetUserLogin" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetUsers">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="AspNetUserLogins">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_MenuCatalogLocalization_Language">
+    <End Role="Language" Type="Self.Language" Multiplicity="1" />
+    <End Role="MenuCatalogLocalization" Type="Self.MenuCatalogLocalization" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Language">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="MenuCatalogLocalization">
+        <PropertyRef Name="LanguageID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_MenuItemLocalization_Language">
+    <End Role="Language" Type="Self.Language" Multiplicity="1" />
+    <End Role="MenuItemLocalization" Type="Self.MenuItemLocalization" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Language">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="MenuItemLocalization">
+        <PropertyRef Name="LanguageID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_MenuCatalog_Organization">
+    <End Role="Organization" Type="Self.Organization" Multiplicity="1" />
+    <End Role="MenuCatalog" Type="Self.MenuCatalog" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Organization">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="MenuCatalog">
+        <PropertyRef Name="OrganizationID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_MenuCatalogLocalization_MenuCatalog">
+    <End Role="MenuCatalog" Type="Self.MenuCatalog" Multiplicity="1" />
+    <End Role="MenuCatalogLocalization" Type="Self.MenuCatalogLocalization" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MenuCatalog">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="MenuCatalogLocalization">
+        <PropertyRef Name="MenuCatalogID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_MenuItem_MenuCatalog">
+    <End Role="MenuCatalog" Type="Self.MenuCatalog" Multiplicity="1" />
+    <End Role="MenuItem" Type="Self.MenuItem" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MenuCatalog">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="MenuItem">
+        <PropertyRef Name="MenuCatalog_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_MenuItemLocalization_MenuItem">
+    <End Role="MenuItem" Type="Self.MenuItem" Multiplicity="1" />
+    <End Role="MenuItemLocalization" Type="Self.MenuItemLocalization" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MenuItem">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="MenuItemLocalization">
+        <PropertyRef Name="MenuItemID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Organization_OrganizationType">
+    <End Role="OrganizationType" Type="Self.OrganizationType" Multiplicity="1" />
+    <End Role="Organization" Type="Self.Organization" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="OrganizationType">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Organization">
+        <PropertyRef Name="OrganizationTypeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_OrganizationPhoneNumber_Organization">
+    <End Role="Organization" Type="Self.Organization" Multiplicity="1" />
+    <End Role="OrganizationPhoneNumber" Type="Self.OrganizationPhoneNumber" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Organization">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="OrganizationPhoneNumber">
+        <PropertyRef Name="OrganizationID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="AspNetUserRoles">
+    <End Role="AspNetRoles" Type="Self.AspNetRole" Multiplicity="*" />
+    <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="*" />
+  </Association>
+  <EntityContainer Name="RESTAURANTEntities2" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="C__MigrationHistory" EntityType="Self.C__MigrationHistory" />
+    <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRole" />
+    <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaim" />
+    <EntitySet Name="AspNetUserLogins" EntityType="Self.AspNetUserLogin" />
+    <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUser" />
+    <EntitySet Name="Languages" EntityType="Self.Language" />
+    <EntitySet Name="MenuCatalogs" EntityType="Self.MenuCatalog" />
+    <EntitySet Name="MenuCatalogLocalizations" EntityType="Self.MenuCatalogLocalization" />
+    <EntitySet Name="MenuItems" EntityType="Self.MenuItem" />
+    <EntitySet Name="MenuItemLocalizations" EntityType="Self.MenuItemLocalization" />
+    <EntitySet Name="Organizations" EntityType="Self.Organization" />
+    <EntitySet Name="OrganizationPhoneNumbers" EntityType="Self.OrganizationPhoneNumber" />
+    <EntitySet Name="OrganizationTypes" EntityType="Self.OrganizationType" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+    <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_User_Id" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_User_Id">
+      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+      <End Role="AspNetUserClaims" EntitySet="AspNetUserClaims" />
+    </AssociationSet>
+    <AssociationSet Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+      <End Role="AspNetUserLogins" EntitySet="AspNetUserLogins" />
+    </AssociationSet>
+    <AssociationSet Name="FK_MenuCatalogLocalization_Language" Association="Self.FK_MenuCatalogLocalization_Language">
+      <End Role="Language" EntitySet="Languages" />
+      <End Role="MenuCatalogLocalization" EntitySet="MenuCatalogLocalizations" />
+    </AssociationSet>
+    <AssociationSet Name="FK_MenuItemLocalization_Language" Association="Self.FK_MenuItemLocalization_Language">
+      <End Role="Language" EntitySet="Languages" />
+      <End Role="MenuItemLocalization" EntitySet="MenuItemLocalizations" />
+    </AssociationSet>
+    <AssociationSet Name="FK_MenuCatalog_Organization" Association="Self.FK_MenuCatalog_Organization">
+      <End Role="Organization" EntitySet="Organizations" />
+      <End Role="MenuCatalog" EntitySet="MenuCatalogs" />
+    </AssociationSet>
+    <AssociationSet Name="FK_MenuCatalogLocalization_MenuCatalog" Association="Self.FK_MenuCatalogLocalization_MenuCatalog">
+      <End Role="MenuCatalog" EntitySet="MenuCatalogs" />
+      <End Role="MenuCatalogLocalization" EntitySet="MenuCatalogLocalizations" />
+    </AssociationSet>
+    <AssociationSet Name="FK_MenuItem_MenuCatalog" Association="Self.FK_MenuItem_MenuCatalog">
+      <End Role="MenuCatalog" EntitySet="MenuCatalogs" />
+      <End Role="MenuItem" EntitySet="MenuItems" />
+    </AssociationSet>
+    <AssociationSet Name="FK_MenuItemLocalization_MenuItem" Association="Self.FK_MenuItemLocalization_MenuItem">
+      <End Role="MenuItem" EntitySet="MenuItems" />
+      <End Role="MenuItemLocalization" EntitySet="MenuItemLocalizations" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Organization_OrganizationType" Association="Self.FK_Organization_OrganizationType">
+      <End Role="OrganizationType" EntitySet="OrganizationTypes" />
+      <End Role="Organization" EntitySet="Organizations" />
+    </AssociationSet>
+    <AssociationSet Name="FK_OrganizationPhoneNumber_Organization" Association="Self.FK_OrganizationPhoneNumber_Organization">
+      <End Role="Organization" EntitySet="Organizations" />
+      <End Role="OrganizationPhoneNumber" EntitySet="OrganizationPhoneNumbers" />
+    </AssociationSet>
+    <AssociationSet Name="AspNetUserRoles" Association="Self.AspNetUserRoles">
+      <End Role="AspNetRoles" EntitySet="AspNetRoles" />
+      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
