@@ -40,8 +40,7 @@ namespace WebApplication2.Controllers
         {
             get
             {
-                //                return HttpContext.Current.GetOwinContext().Authentication;
-                return null;
+                                return HttpContext.Current.GetOwinContext().Authentication;
             }
         }
         private async Task SignInAsync(ApplicationUser user, bool isPersistent)
@@ -58,16 +57,21 @@ namespace WebApplication2.Controllers
         }
 
         // GET api/AspNetUser/5
+        [Authorize]
         [ResponseType(typeof(AspNetUser))]
         public async Task<IHttpActionResult> GetAspNetUser(string id)
         {
-            AspNetUser aspnetuser = await db.AspNetUsers.FindAsync(id);
-            if (aspnetuser == null)
+            if (User.Identity.GetUserId().Equals(id))
             {
-                return NotFound();
-            }
+                AspNetUser aspnetuser = await db.AspNetUsers.FindAsync(id);
+                if (aspnetuser == null)
+                {
+                    return NotFound();
+                }
 
-            return Ok(aspnetuser);
+                return Ok(aspnetuser);
+            }
+            return null;
         }
 
         // PUT api/AspNetUser/5
@@ -130,6 +134,14 @@ namespace WebApplication2.Controllers
                     throw;
                 }
             }
+            if (result.Succeeded)
+            {
+                await SignInAsync(user, isPersistent: false);
+            }
+            else
+            {
+            }
+//            await SignInAsync(user, isPersistent: false);
 
             //            return CreatedAtRoute("DefaultApi", new { id = aspnetuser.Id }, aspnetuser);
             return Ok(user);
