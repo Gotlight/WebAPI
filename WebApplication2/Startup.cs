@@ -10,7 +10,7 @@ namespace WebApplication2
         public void Configuration(IAppBuilder app)
         {
             ConfigureAuth(app);
-            HttpConfiguration config = new HttpConfiguration();
+            var config = new HttpConfiguration();
             WebApiConfig.Register(config);
             app.UseWebApi(config);
         }
