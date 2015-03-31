@@ -1,4 +1,5 @@
-﻿using Microsoft.Owin;
+﻿using System.Web.Http;
+using Microsoft.Owin;
 using Owin;
 
 [assembly: OwinStartupAttribute(typeof(WebApplication2.Startup))]
@@ -9,6 +10,9 @@ namespace WebApplication2
         public void Configuration(IAppBuilder app)
         {
             ConfigureAuth(app);
+            HttpConfiguration config = new HttpConfiguration();
+            WebApiConfig.Register(config);
+            app.UseWebApi(config);
         }
     }
 }

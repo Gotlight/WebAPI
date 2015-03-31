@@ -78,7 +78,6 @@ C:\Users\Kot\Documents\WebAPI\WebApplication2\bin\Microsoft.Owin.Security.Micros
 C:\Users\Kot\Documents\WebAPI\WebApplication2\bin\Microsoft.Owin.Security.OAuth.dll
 C:\Users\Kot\Documents\WebAPI\WebApplication2\bin\Microsoft.Owin.Security.Twitter.dll
 C:\Users\Kot\Documents\WebAPI\WebApplication2\bin\Microsoft.Web.Infrastructure.dll
-C:\Users\Kot\Documents\WebAPI\WebApplication2\bin\Newtonsoft.Json.dll
 C:\Users\Kot\Documents\WebAPI\WebApplication2\bin\Owin.dll
 C:\Users\Kot\Documents\WebAPI\WebApplication2\bin\System.Net.Http.Formatting.dll
 C:\Users\Kot\Documents\WebAPI\WebApplication2\bin\System.Web.Helpers.dll
@@ -120,3 +119,5 @@ C:\Users\Kot\Documents\WebAPI\WebApplication2\bin\Microsoft.Owin.Security.Micros
 C:\Users\Kot\Documents\WebAPI\WebApplication2\obj\Debug\WebApplication2.csprojResolveAssemblyReference.cache
 C:\Users\Kot\Documents\WebAPI\WebApplication2\obj\Debug\WebApplication2.dll
 C:\Users\Kot\Documents\WebAPI\WebApplication2\obj\Debug\WebApplication2.pdb
+C:\Users\Kot\Documents\WebAPI\WebApplication2\bin\System.Web.Http.Owin.dll
+C:\Users\Kot\Documents\WebAPI\WebApplication2\bin\System.Web.Http.Owin.xml
