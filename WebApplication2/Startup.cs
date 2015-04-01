@@ -2,6 +2,7 @@
 using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web.Http;
+using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Owin;
 using Microsoft.Owin.Security.OAuth;
@@ -18,8 +19,13 @@ namespace WebApplication2
 
         public void Configuration(IAppBuilder app)
         {
+            var config = new HttpConfiguration();
+            WebApiConfig.Register(config);
+            
             ConfigureOAuth(app);
-            //Rest of code is here;
+
+            app.UseCors(Microsoft.Owin.Cors.CorsOptions.AllowAll);
+            app.UseWebApi(config);
         }
 
         public void ConfigureOAuth(IAppBuilder app)
@@ -41,6 +47,17 @@ namespace WebApplication2
         public class SimpleAuthorizationServerProvider : OAuthAuthorizationServerProvider
         {
             private RESTAURANTEntities2 db = new RESTAURANTEntities2();
+            public UserManager<ApplicationUser> UserManager { get; private set; }
+
+            public SimpleAuthorizationServerProvider()
+            : this(new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new ApplicationDbContext())))
+        {
+        }
+
+            public SimpleAuthorizationServerProvider(UserManager<ApplicationUser> userManager)
+        {
+            UserManager = userManager;
+        }
             public override async Task ValidateClientAuthentication(OAuthValidateClientAuthenticationContext context)
             {
                 context.Validated();
@@ -52,7 +69,7 @@ namespace WebApplication2
                 context.OwinContext.Response.Headers.Add("Access-Control-Allow-Origin", new[] { "*" });
 
 
-                var user = await db.AspNetUsers.FindAsync(context.UserName, context.Password);
+                var user = await UserManager.FindAsync(context.UserName, context.Password);
 
                     if (user == null)
                     {

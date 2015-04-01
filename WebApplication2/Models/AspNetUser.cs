@@ -7,6 +7,8 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+using System.ComponentModel.DataAnnotations;
+
 namespace WebApplication2.Models
 {
     using System;
@@ -20,7 +22,7 @@ namespace WebApplication2.Models
             this.AspNetUserLogins = new HashSet<AspNetUserLogin>();
             this.AspNetRoles = new HashSet<AspNetRole>();
         }
-    
+        [Key]
         public string Id { get; set; }
         public string UserName { get; set; }
         public string PasswordHash { get; set; }

@@ -121,3 +121,6 @@ C:\Users\Kot\Documents\WebAPI\WebApplication2\obj\Debug\WebApplication2.dll
 C:\Users\Kot\Documents\WebAPI\WebApplication2\obj\Debug\WebApplication2.pdb
 C:\Users\Kot\Documents\WebAPI\WebApplication2\bin\System.Web.Http.Owin.dll
 C:\Users\Kot\Documents\WebAPI\WebApplication2\bin\System.Web.Http.Owin.xml
+C:\Users\Kot\Documents\WebAPI\WebApplication2\bin\Microsoft.Owin.Cors.dll
+C:\Users\Kot\Documents\WebAPI\WebApplication2\bin\System.Web.Cors.dll
+C:\Users\Kot\Documents\WebAPI\WebApplication2\bin\Microsoft.Owin.Cors.xml

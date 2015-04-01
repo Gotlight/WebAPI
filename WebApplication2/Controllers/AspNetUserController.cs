@@ -61,8 +61,8 @@ namespace WebApplication2.Controllers
         [ResponseType(typeof(AspNetUser))]
         public async Task<IHttpActionResult> GetAspNetUser(string id)
         {
-            if (User.Identity.GetUserId().Equals(id))
-            {
+//            if (User.Identity.GetUserId().Equals(id))
+//            {
                 AspNetUser aspnetuser = await db.AspNetUsers.FindAsync(id);
                 if (aspnetuser == null)
                 {
@@ -70,8 +70,8 @@ namespace WebApplication2.Controllers
                 }
 
                 return Ok(aspnetuser);
-            }
-            return null;
+//            }
+//            return null;
         }
 
         // PUT api/AspNetUser/5
@@ -147,21 +147,21 @@ namespace WebApplication2.Controllers
             return Ok(user);
         }
 
-        // DELETE api/AspNetUser/5
-        [ResponseType(typeof(AspNetUser))]
-        public async Task<IHttpActionResult> DeleteAspNetUser(string id)
-        {
-            AspNetUser aspnetuser = await db.AspNetUsers.FindAsync(id);
-            if (aspnetuser == null)
-            {
-                return NotFound();
-            }
-
-            db.AspNetUsers.Remove(aspnetuser);
-            await db.SaveChangesAsync();
-
-            return Ok(aspnetuser);
-        }
+//        // DELETE api/AspNetUser/5
+//        [ResponseType(typeof(AspNetUser))]
+//        public async Task<IHttpActionResult> DeleteAspNetUser(string id)
+//        {
+//            AspNetUser aspnetuser = await UserManager.FindAsync(id);
+//            if (aspnetuser == null)
+//            {
+//                return NotFound();
+//            }
+//
+//            db.AspNetUsers.Remove(aspnetuser);
+//            await db.SaveChangesAsync();
+//
+//            return Ok(aspnetuser);
+//        }
 
         protected override void Dispose(bool disposing)
         {
