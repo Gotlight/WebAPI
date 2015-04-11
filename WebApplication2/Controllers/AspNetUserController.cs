@@ -112,6 +112,7 @@ namespace WebApplication2.Controllers
         //        [ResponseType(typeof(AspNetUser))]
 
         [System.Web.Http.HttpPost]
+        [Route("api/AspNetUser/Register")]
         public async Task<IHttpActionResult> PostAspNetUser(User usr)
         {
             //            var aspnetuser = new AspNetUser {UserName = usr.username};
@@ -136,15 +137,31 @@ namespace WebApplication2.Controllers
             }
             if (result.Succeeded)
             {
-                await SignInAsync(user, isPersistent: false);
+                await SignInAsync(user, isPersistent: true);
             }
             else
             {
+                return BadRequest();
             }
-//            await SignInAsync(user, isPersistent: false);
-
-            //            return CreatedAtRoute("DefaultApi", new { id = aspnetuser.Id }, aspnetuser);
+//          user.SecurityStamp = 
             return Ok(user);
+
+
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        [Route("api/AspNetUser/Login")]
+        public async Task<IHttpActionResult> Login(User usr)
+        {
+            
+                var user = await UserManager.FindAsync(usr.username, usr.password);
+                if (user != null && AspNetUserExists(user.Id))
+                {
+                    await SignInAsync(user, isPersistent:true);
+                    return Ok(user);
+                }
+                    return BadRequest();
         }
 
 //        // DELETE api/AspNetUser/5

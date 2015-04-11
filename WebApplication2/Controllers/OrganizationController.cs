@@ -81,7 +81,7 @@ namespace WebApplication2.Controllers
                 join lang in db.Languages on l.LanguageID equals lang.ID
                 join o in db.Organizations on c.OrganizationID equals o.ID
                 where o.ID == OrganizationId && lang.LanguageCode == LanguageCode
-                     select new { c.ID, MenuCatalogID = c.ParentID.Trim(),
+                     select new { c.ID, MenuCatalogID = c.ID,
                                   MenuItemLocalizationName = l.MenuItemLocalizationName.Trim(),
                                   it.MenuItemPrice,
                                   it.IsActive
@@ -99,85 +99,10 @@ namespace WebApplication2.Controllers
             return img;
         }
 
-        // PUT api/Organization/5
-        public async Task<IHttpActionResult> PutOrganization(Guid id, Organization organization)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+       
+       
 
-            if (id != organization.ID)
-            {
-                return BadRequest();
-            }
-
-            db.Entry(organization).State = EntityState.Modified;
-
-            try
-            {
-                await db.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!OrganizationExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return StatusCode(HttpStatusCode.NoContent);
-        }
-
-        // POST api/Organization
-        [ResponseType(typeof(Organization))]
-        public async Task<IHttpActionResult> PostOrganization(Organization organization)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            db.Organizations.Add(organization);
-
-            try
-            {
-                await db.SaveChangesAsync();
-            }
-            catch (DbUpdateException)
-            {
-                if (OrganizationExists(organization.ID))
-                {
-                    return Conflict();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return CreatedAtRoute("DefaultApi", new { id = organization.ID }, organization);
-        }
-
-        // DELETE api/Organization/5
-        [ResponseType(typeof(Organization))]
-        public async Task<IHttpActionResult> DeleteOrganization(Guid id)
-        {
-            Organization organization = await db.Organizations.FindAsync(id);
-            if (organization == null)
-            {
-                return NotFound();
-            }
-
-            db.Organizations.Remove(organization);
-            await db.SaveChangesAsync();
-
-            return Ok(organization);
-        }
+      
 
         protected override void Dispose(bool disposing)
         {
