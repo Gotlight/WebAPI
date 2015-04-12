@@ -97,7 +97,6 @@ C:\Users\Kot\Documents\WebAPI\WebApplication2\bin\System.Web.Razor.xml
 C:\Users\Kot\Documents\WebAPI\WebApplication2\bin\System.Web.WebPages.xml
 C:\Users\Kot\Documents\WebAPI\WebApplication2\bin\System.Web.WebPages.Deployment.xml
 C:\Users\Kot\Documents\WebAPI\WebApplication2\bin\System.Web.WebPages.Razor.xml
-C:\Users\Kot\Documents\WebAPI\WebApplication2\bin\Newtonsoft.Json.xml
 C:\Users\Kot\Documents\WebAPI\WebApplication2\bin\Antlr3.Runtime.pdb
 C:\Users\Kot\Documents\WebAPI\WebApplication2\bin\System.Net.Http.Formatting.xml
 C:\Users\Kot\Documents\WebAPI\WebApplication2\bin\System.Web.Http.xml

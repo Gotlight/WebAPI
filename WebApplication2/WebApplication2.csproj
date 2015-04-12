@@ -290,6 +290,7 @@
       <LastGenOutput>RESTAURANT.cs</LastGenOutput>
     </Content>
     <Content Include="GetImageFromDB.ashx" />
+    <None Include="Properties\PublishProfiles\Somee.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />

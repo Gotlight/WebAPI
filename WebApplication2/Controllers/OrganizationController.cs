@@ -75,19 +75,44 @@ namespace WebApplication2.Controllers
         [Route("api/organization/{OrganizationId}/{LanguageCode}/MenuItem")]
         public IQueryable GetMenuItemByOrganization(Guid OrganizationId, string LanguageCode)
         {
-            var mc = from it in db.MenuItems
-                join c in db.MenuCatalogs on it.MenuCatalog_ID equals c.ID
-                join l in db.MenuItemLocalizations on it.ID equals l.MenuItemID
-                join lang in db.Languages on l.LanguageID equals lang.ID
-                join o in db.Organizations on c.OrganizationID equals o.ID
-                where o.ID == OrganizationId && lang.LanguageCode == LanguageCode
-                     select new { c.ID, MenuCatalogID = c.ID,
-                                  MenuItemLocalizationName = l.MenuItemLocalizationName.Trim(),
-                                  it.MenuItemPrice,
-                                  it.IsActive
-                     }
-            ;
-            return mc.OrderBy(x => x.MenuItemLocalizationName);
+            if (LanguageCode.Equals("en"))
+            {
+                var mc = from it in db.MenuItems
+                    join c in db.MenuCatalogs on it.MenuCatalog_ID equals c.ID
+                    join o in db.Organizations on c.OrganizationID equals o.ID
+                    where o.ID == OrganizationId
+                    select new
+                    {
+                        c.ID,
+                        MenuCatalogID = c.ID,
+                        MenuItemLocalizationName = c.CatalogLevelName.Trim(),
+                        it.MenuItemPrice,
+                        it.IsActive
+                    }
+                    ;
+
+                return mc.OrderBy(x => x.MenuItemLocalizationName);
+            }
+            else
+            {
+                var mc = from it in db.MenuItems
+                         join c in db.MenuCatalogs on it.MenuCatalog_ID equals c.ID
+                         join l in db.MenuItemLocalizations on it.ID equals l.MenuItemID
+                         join lang in db.Languages on l.LanguageID equals lang.ID
+                         join o in db.Organizations on c.OrganizationID equals o.ID
+                         where o.ID == OrganizationId && lang.LanguageCode == LanguageCode
+                         select new
+                         {
+                             c.ID,
+                             MenuCatalogID = c.ID,
+                             MenuItemLocalizationName = l.MenuItemLocalizationName.Trim(),
+                             it.MenuItemPrice,
+                             it.IsActive
+                         }
+                    ;
+
+                return mc.OrderBy(x => x.MenuItemLocalizationName);
+            }
         }
 
         [Route("api/organization/{OrganizationId}/OrganizationLogo")]
@@ -99,7 +124,7 @@ namespace WebApplication2.Controllers
             return img;
         }
 
-       
+
        
 
       
