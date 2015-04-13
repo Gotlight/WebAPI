@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="e815d7abf7434a65ad4049143bce9499" Name="Diagram1" ZoomLevel="65">
+      <Diagram DiagramId="e815d7abf7434a65ad4049143bce9499" Name="Diagram1" ZoomLevel="74">
         <EntityTypeShape EntityType="RESTAURANTModel.C__MigrationHistory" Width="1.5" PointX="0.75" PointY="1.75" IsExpanded="true" />
         <EntityTypeShape EntityType="RESTAURANTModel.AspNetRole" Width="1.5" PointX="0.75" PointY="11.5" IsExpanded="true" />
         <EntityTypeShape EntityType="RESTAURANTModel.AspNetUserClaim" Width="1.5" PointX="5.25" PointY="10" IsExpanded="true" />
@@ -30,7 +30,10 @@
         <AssociationConnector Association="RESTAURANTModel.FK_Organization_OrganizationType" ManuallyRouted="false" />
         <AssociationConnector Association="RESTAURANTModel.FK_OrganizationPhoneNumber_Organization" ManuallyRouted="false" />
         <AssociationConnector Association="RESTAURANTModel.AspNetUserRoles" ManuallyRouted="false" />
-      </Diagram>
+        <EntityTypeShape EntityType="RESTAURANTModel.TableReservation" Width="1.5" PointX="8.25" PointY="13" />
+        <AssociationConnector Association="RESTAURANTModel.FK_TableReservation_AspNetUsers" />
+        <AssociationConnector Association="RESTAURANTModel.FK_TableReservation_Organization" />
+        </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
 </edmx:Edmx>

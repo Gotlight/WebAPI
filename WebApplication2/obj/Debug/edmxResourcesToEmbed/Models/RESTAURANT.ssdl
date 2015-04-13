@@ -134,6 +134,17 @@
     <Property Name="version" Type="int" />
     <Property Name="definition" Type="varbinary(max)" />
   </EntityType>
+  <EntityType Name="TableReservation">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="AspNetUserID" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="OrganizationID" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="PersonsCount" Type="int" Nullable="false" />
+    <Property Name="ReservationTime" Type="time" Precision="7" Nullable="false" />
+    <Property Name="ReservationDate" Type="date" Nullable="false" />
+  </EntityType>
   <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_User_Id">
     <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
       <OnDelete Action="Cascade" />
@@ -286,6 +297,30 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_TableReservation_AspNetUsers">
+    <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
+    <End Role="TableReservation" Type="Self.TableReservation" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetUsers">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="TableReservation">
+        <PropertyRef Name="AspNetUserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TableReservation_Organization">
+    <End Role="Organization" Type="Self.Organization" Multiplicity="1" />
+    <End Role="TableReservation" Type="Self.TableReservation" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Organization">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="TableReservation">
+        <PropertyRef Name="OrganizationID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <EntityContainer Name="RESTAURANTModelStoreContainer">
     <EntitySet Name="__MigrationHistory" EntityType="Self.__MigrationHistory" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRoles" Schema="dbo" store:Type="Tables" />
@@ -302,6 +337,7 @@
     <EntitySet Name="OrganizationPhoneNumber" EntityType="Self.OrganizationPhoneNumber" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="OrganizationType" EntityType="Self.OrganizationType" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TableReservation" EntityType="Self.TableReservation" Schema="dbo" store:Type="Tables" />
     <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_User_Id" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_User_Id">
       <End Role="AspNetUsers" EntitySet="AspNetUsers" />
       <End Role="AspNetUserClaims" EntitySet="AspNetUserClaims" />
@@ -349,6 +385,14 @@
     <AssociationSet Name="FK_OrganizationPhoneNumber_Organization" Association="Self.FK_OrganizationPhoneNumber_Organization">
       <End Role="Organization" EntitySet="Organization" />
       <End Role="OrganizationPhoneNumber" EntitySet="OrganizationPhoneNumber" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TableReservation_AspNetUsers" Association="Self.FK_TableReservation_AspNetUsers">
+      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+      <End Role="TableReservation" EntitySet="TableReservation" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TableReservation_Organization" Association="Self.FK_TableReservation_Organization">
+      <End Role="Organization" EntitySet="Organization" />
+      <End Role="TableReservation" EntitySet="TableReservation" />
     </AssociationSet>
   </EntityContainer>
 </Schema>

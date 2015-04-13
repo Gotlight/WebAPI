@@ -51,6 +51,7 @@
     <NavigationProperty Name="AspNetUserClaims" Relationship="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_User_Id" FromRole="AspNetUsers" ToRole="AspNetUserClaims" />
     <NavigationProperty Name="AspNetUserLogins" Relationship="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserLogins" />
     <NavigationProperty Name="AspNetRoles" Relationship="Self.AspNetUserRoles" FromRole="AspNetUsers" ToRole="AspNetRoles" />
+    <NavigationProperty Name="TableReservations" Relationship="RESTAURANTModel.FK_TableReservation_AspNetUsers" FromRole="AspNetUser" ToRole="TableReservation" />
   </EntityType>
   <EntityType Name="Language">
     <Key>
@@ -120,6 +121,7 @@
     <NavigationProperty Name="MenuCatalogs" Relationship="Self.FK_MenuCatalog_Organization" FromRole="Organization" ToRole="MenuCatalog" />
     <NavigationProperty Name="OrganizationType" Relationship="Self.FK_Organization_OrganizationType" FromRole="Organization" ToRole="OrganizationType" />
     <NavigationProperty Name="OrganizationPhoneNumbers" Relationship="Self.FK_OrganizationPhoneNumber_Organization" FromRole="Organization" ToRole="OrganizationPhoneNumber" />
+    <NavigationProperty Name="TableReservations" Relationship="RESTAURANTModel.FK_TableReservation_Organization" FromRole="Organization" ToRole="TableReservation" />
   </EntityType>
   <EntityType Name="OrganizationPhoneNumber">
     <Key>
@@ -335,5 +337,51 @@
       <End Role="AspNetRoles" EntitySet="AspNetRoles" />
       <End Role="AspNetUsers" EntitySet="AspNetUsers" />
     </AssociationSet>
+    <EntitySet Name="TableReservations" EntityType="RESTAURANTModel.TableReservation" />
+    <AssociationSet Name="FK_TableReservation_AspNetUsers" Association="RESTAURANTModel.FK_TableReservation_AspNetUsers">
+      <End Role="AspNetUser" EntitySet="AspNetUsers" />
+      <End Role="TableReservation" EntitySet="TableReservations" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TableReservation_Organization" Association="RESTAURANTModel.FK_TableReservation_Organization">
+      <End Role="Organization" EntitySet="Organizations" />
+      <End Role="TableReservation" EntitySet="TableReservations" />
+    </AssociationSet>
   </EntityContainer>
+  <EntityType Name="TableReservation">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Guid" Nullable="false" />
+    <Property Name="AspNetUserID" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="OrganizationID" Type="Guid" Nullable="false" />
+    <Property Name="PersonsCount" Type="Int32" Nullable="false" />
+    <Property Name="ReservationTime" Type="Time" Nullable="false" Precision="7" />
+    <Property Name="ReservationDate" Type="DateTime" Nullable="false" Precision="0" />
+    <NavigationProperty Name="AspNetUser" Relationship="RESTAURANTModel.FK_TableReservation_AspNetUsers" FromRole="TableReservation" ToRole="AspNetUser" />
+    <NavigationProperty Name="Organization" Relationship="RESTAURANTModel.FK_TableReservation_Organization" FromRole="TableReservation" ToRole="Organization" />
+  </EntityType>
+  <Association Name="FK_TableReservation_AspNetUsers">
+    <End Type="RESTAURANTModel.AspNetUser" Role="AspNetUser" Multiplicity="1" />
+    <End Type="RESTAURANTModel.TableReservation" Role="TableReservation" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetUser">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="TableReservation">
+        <PropertyRef Name="AspNetUserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TableReservation_Organization">
+    <End Type="RESTAURANTModel.Organization" Role="Organization" Multiplicity="1" />
+    <End Type="RESTAURANTModel.TableReservation" Role="TableReservation" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Organization">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="TableReservation">
+        <PropertyRef Name="OrganizationID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
 </Schema>

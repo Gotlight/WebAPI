@@ -18,6 +18,7 @@ namespace WebApplication2.Models
         {
             this.MenuCatalogs = new HashSet<MenuCatalog>();
             this.OrganizationPhoneNumbers = new HashSet<OrganizationPhoneNumber>();
+            this.TableReservations = new HashSet<TableReservation>();
         }
     
         public System.Guid ID { get; set; }
@@ -30,5 +31,6 @@ namespace WebApplication2.Models
         public virtual ICollection<MenuCatalog> MenuCatalogs { get; set; }
         public virtual OrganizationType OrganizationType { get; set; }
         public virtual ICollection<OrganizationPhoneNumber> OrganizationPhoneNumbers { get; set; }
+        public virtual ICollection<TableReservation> TableReservations { get; set; }
     }
 }

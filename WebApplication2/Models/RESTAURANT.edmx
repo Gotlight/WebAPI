@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="RESTAURANTModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="RESTAURANTModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="__MigrationHistory">
           <Key>
             <PropertyRef Name="MigrationId" />
@@ -138,6 +138,16 @@
           <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="version" Type="int" />
           <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="TableReservation">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="OrganizationID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="PersonsCount" Type="int" Nullable="false" />
+          <Property Name="AspNetUserID" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="ReservationDateTime" Type="datetime" Nullable="false" />
         </EntityType>
         <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_User_Id">
           <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
@@ -291,6 +301,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_TableReservation_AspNetUsers">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
+          <End Role="TableReservation" Type="Self.TableReservation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TableReservation">
+              <PropertyRef Name="AspNetUserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TableReservation_Organization">
+          <End Role="Organization" Type="Self.Organization" Multiplicity="1" />
+          <End Role="TableReservation" Type="Self.TableReservation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Organization">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="TableReservation">
+              <PropertyRef Name="OrganizationID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="RESTAURANTModelStoreContainer">
           <EntitySet Name="__MigrationHistory" EntityType="Self.__MigrationHistory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRoles" Schema="dbo" store:Type="Tables" />
@@ -307,6 +341,7 @@
           <EntitySet Name="OrganizationPhoneNumber" EntityType="Self.OrganizationPhoneNumber" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OrganizationType" EntityType="Self.OrganizationType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TableReservation" EntityType="Self.TableReservation" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_User_Id" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_User_Id">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="AspNetUserClaims" EntitySet="AspNetUserClaims" />
@@ -355,9 +390,16 @@
             <End Role="Organization" EntitySet="Organization" />
             <End Role="OrganizationPhoneNumber" EntitySet="OrganizationPhoneNumber" />
           </AssociationSet>
+          <AssociationSet Name="FK_TableReservation_AspNetUsers" Association="Self.FK_TableReservation_AspNetUsers">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="TableReservation" EntitySet="TableReservation" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TableReservation_Organization" Association="Self.FK_TableReservation_Organization">
+            <End Role="Organization" EntitySet="Organization" />
+            <End Role="TableReservation" EntitySet="TableReservation" />
+          </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="RESTAURANTModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -412,6 +454,7 @@
           <NavigationProperty Name="AspNetUserClaims" Relationship="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_User_Id" FromRole="AspNetUsers" ToRole="AspNetUserClaims" />
           <NavigationProperty Name="AspNetUserLogins" Relationship="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserLogins" />
           <NavigationProperty Name="AspNetRoles" Relationship="Self.AspNetUserRoles" FromRole="AspNetUsers" ToRole="AspNetRoles" />
+          <NavigationProperty Name="TableReservations" Relationship="RESTAURANTModel.FK_TableReservation_AspNetUsers" FromRole="AspNetUser" ToRole="TableReservation" />
         </EntityType>
         <EntityType Name="Language">
           <Key>
@@ -481,6 +524,7 @@
           <NavigationProperty Name="MenuCatalogs" Relationship="Self.FK_MenuCatalog_Organization" FromRole="Organization" ToRole="MenuCatalog" />
           <NavigationProperty Name="OrganizationType" Relationship="Self.FK_Organization_OrganizationType" FromRole="Organization" ToRole="OrganizationType" />
           <NavigationProperty Name="OrganizationPhoneNumbers" Relationship="Self.FK_OrganizationPhoneNumber_Organization" FromRole="Organization" ToRole="OrganizationPhoneNumber" />
+          <NavigationProperty Name="TableReservations" Relationship="RESTAURANTModel.FK_TableReservation_Organization" FromRole="Organization" ToRole="TableReservation" />
         </EntityType>
         <EntityType Name="OrganizationPhoneNumber">
           <Key>
@@ -696,7 +740,52 @@
             <End Role="AspNetRoles" EntitySet="AspNetRoles" />
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
           </AssociationSet>
+          <EntitySet Name="TableReservations" EntityType="RESTAURANTModel.TableReservation" />
+          <AssociationSet Name="FK_TableReservation_AspNetUsers" Association="RESTAURANTModel.FK_TableReservation_AspNetUsers">
+            <End Role="AspNetUser" EntitySet="AspNetUsers" />
+            <End Role="TableReservation" EntitySet="TableReservations" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TableReservation_Organization" Association="RESTAURANTModel.FK_TableReservation_Organization">
+            <End Role="Organization" EntitySet="Organizations" />
+            <End Role="TableReservation" EntitySet="TableReservations" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="TableReservation">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Guid" Nullable="false" />
+          <Property Name="OrganizationID" Type="Guid" Nullable="false" />
+          <Property Name="PersonsCount" Type="Int32" Nullable="false" />
+          <Property Name="AspNetUserID" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="ReservationDateTime" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="AspNetUser" Relationship="RESTAURANTModel.FK_TableReservation_AspNetUsers" FromRole="TableReservation" ToRole="AspNetUser" />
+          <NavigationProperty Name="Organization" Relationship="RESTAURANTModel.FK_TableReservation_Organization" FromRole="TableReservation" ToRole="Organization" />
+        </EntityType>
+        <Association Name="FK_TableReservation_AspNetUsers">
+          <End Type="RESTAURANTModel.AspNetUser" Role="AspNetUser" Multiplicity="1" />
+          <End Type="RESTAURANTModel.TableReservation" Role="TableReservation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TableReservation">
+              <PropertyRef Name="AspNetUserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TableReservation_Organization">
+          <End Type="RESTAURANTModel.Organization" Role="Organization" Multiplicity="1" />
+          <End Type="RESTAURANTModel.TableReservation" Role="TableReservation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Organization">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="TableReservation">
+              <PropertyRef Name="OrganizationID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -848,6 +937,17 @@
               <ScalarProperty Name="Id" ColumnName="UserId" />
             </EndProperty>
           </AssociationSetMapping>
+          <EntitySetMapping Name="TableReservations">
+            <EntityTypeMapping TypeName="RESTAURANTModel.TableReservation">
+              <MappingFragment StoreEntitySet="TableReservation">
+                <ScalarProperty Name="ReservationDateTime" ColumnName="ReservationDateTime" />
+                <ScalarProperty Name="AspNetUserID" ColumnName="AspNetUserID" />
+                <ScalarProperty Name="PersonsCount" ColumnName="PersonsCount" />
+                <ScalarProperty Name="OrganizationID" ColumnName="OrganizationID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

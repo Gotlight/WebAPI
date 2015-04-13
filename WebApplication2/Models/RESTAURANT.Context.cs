@@ -39,5 +39,6 @@ namespace WebApplication2.Models
         public virtual DbSet<OrganizationPhoneNumber> OrganizationPhoneNumbers { get; set; }
         public virtual DbSet<OrganizationType> OrganizationTypes { get; set; }
         public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
+        public virtual DbSet<TableReservation> TableReservations { get; set; }
     }
 }

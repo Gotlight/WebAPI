@@ -195,6 +195,7 @@
     <Compile Include="Controllers\MenuCatalogController.cs" />
     <Compile Include="Controllers\OrganizationController.cs" />
     <Compile Include="Controllers\OrganizationMVCController.cs" />
+    <Compile Include="Controllers\TableReservationController.cs" />
     <Compile Include="GetImageFromDB.ashx.cs">
       <DependentUpon>GetImageFromDB.ashx</DependentUpon>
     </Compile>
@@ -258,6 +259,9 @@
       <DependentUpon>RESTAURANT.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\sysdiagram.cs">
+      <DependentUpon>RESTAURANT.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TableReservation.cs">
       <DependentUpon>RESTAURANT.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
