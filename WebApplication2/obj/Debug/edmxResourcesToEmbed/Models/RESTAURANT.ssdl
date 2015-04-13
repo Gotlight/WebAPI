@@ -139,11 +139,10 @@
       <PropertyRef Name="ID" />
     </Key>
     <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
-    <Property Name="AspNetUserID" Type="nvarchar" MaxLength="128" Nullable="false" />
     <Property Name="OrganizationID" Type="uniqueidentifier" Nullable="false" />
     <Property Name="PersonsCount" Type="int" Nullable="false" />
-    <Property Name="ReservationTime" Type="time" Precision="7" Nullable="false" />
-    <Property Name="ReservationDate" Type="date" Nullable="false" />
+    <Property Name="AspNetUserID" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="ReservationDateTime" Type="datetime" Nullable="false" />
   </EntityType>
   <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_User_Id">
     <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">

@@ -352,11 +352,10 @@
       <PropertyRef Name="ID" />
     </Key>
     <Property Name="ID" Type="Guid" Nullable="false" />
-    <Property Name="AspNetUserID" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
     <Property Name="OrganizationID" Type="Guid" Nullable="false" />
     <Property Name="PersonsCount" Type="Int32" Nullable="false" />
-    <Property Name="ReservationTime" Type="Time" Nullable="false" Precision="7" />
-    <Property Name="ReservationDate" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="AspNetUserID" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="ReservationDateTime" Type="DateTime" Nullable="false" Precision="3" />
     <NavigationProperty Name="AspNetUser" Relationship="RESTAURANTModel.FK_TableReservation_AspNetUsers" FromRole="TableReservation" ToRole="AspNetUser" />
     <NavigationProperty Name="Organization" Relationship="RESTAURANTModel.FK_TableReservation_Organization" FromRole="TableReservation" ToRole="Organization" />
   </EntityType>

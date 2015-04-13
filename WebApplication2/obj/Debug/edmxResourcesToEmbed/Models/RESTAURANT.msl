@@ -149,11 +149,10 @@
     <EntitySetMapping Name="TableReservations">
       <EntityTypeMapping TypeName="RESTAURANTModel.TableReservation">
         <MappingFragment StoreEntitySet="TableReservation">
-          <ScalarProperty Name="ReservationDate" ColumnName="ReservationDate" />
-          <ScalarProperty Name="ReservationTime" ColumnName="ReservationTime" />
+          <ScalarProperty Name="ReservationDateTime" ColumnName="ReservationDateTime" />
+          <ScalarProperty Name="AspNetUserID" ColumnName="AspNetUserID" />
           <ScalarProperty Name="PersonsCount" ColumnName="PersonsCount" />
           <ScalarProperty Name="OrganizationID" ColumnName="OrganizationID" />
-          <ScalarProperty Name="AspNetUserID" ColumnName="AspNetUserID" />
           <ScalarProperty Name="ID" ColumnName="ID" />
         </MappingFragment>
       </EntityTypeMapping>

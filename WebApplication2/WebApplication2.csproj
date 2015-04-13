@@ -243,6 +243,7 @@
     <Compile Include="Models\OrganizationType.cs">
       <DependentUpon>RESTAURANT.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Reservation.cs" />
     <Compile Include="Models\RESTAURANT.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
